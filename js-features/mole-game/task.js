@@ -9,19 +9,18 @@ function getHole(index) {
     return document.getElementById(`hole${index}`);
 }
 
-function killMole() {
-    for (let i = 1; i <= 9; i++) {
-        if (getHole(i).classList.contains('hole_has-mole')) {
-            deadDisplay.textContent = ++counterDead;
-        } else {
-            lostDisplay.textContent = ++counterLost;
-        }
+function killMole(event) {
+    const clickedHole = event.target; 
+    if (clickedHole.classList.contains('hole_has-mole')) {
+        deadDisplay.textContent = ++counterDead;
+    } else {
+        lostDisplay.textContent = ++counterLost;
+    }
 
-        if (counterDead === 10 ) {
+    if (counterDead === 10 ) {
         endGame("Победа!");
-            } else if (counterLost === 5) {
+    } else if (counterLost === 5) {
         endGame("Игра окончена. Вы проиграли");
-        }
     }
 }
 
@@ -32,3 +31,7 @@ function endGame(massage) {
         deadDisplay.textContent = counterDead;
         lostDisplay.textContent = counterLost;
 }
+
+holes.forEach((hole) => {
+    hole.addEventListener('click', killMole);
+});
